@@ -2,37 +2,52 @@ Ext.define('OUIsp.Galaxies.Util', {
 	alternateClassName: 'Galaxies_Util',
 
 	singleton: true,
-	cobGRAY_THEME: {
-		labelColor: "gray",
-		borderColor: "gray",
-		fillColor: "#FFFFFF",
-		moonColor: ""
-	},
-	cobFUCHSIA_THEME: {
-		labelColor: "",
-		borderColor: "",
-		fillColor: "",
-		moonColor: ""
-	},
-	cobBLUE_THEME: {
-		labelColor: "#157EFB",
-		borderColor: "#157EFB",
-		fillColor: "#FFFFFF",
-		moonColor: "#71B0FB"
-	},
-	cobGREEN_THEME: {
-		labelColor: "",
-		borderColor: "",
-		fillColor: "",
-		moonColor: ""
+	cobTHEME: {
+		GRAY: {
+			labelColor: "gray",
+			borderColor: "gray",
+			fillColor: "#FFFFFF",
+			moonColor: ""
+		},
+		FUCHSIA: {
+			labelColor: "#157EFB",
+			borderColor: "#157EFB",
+			fillColor: "#FFFFFF",
+			moonColor: "#71B0FB"
+		},
+		BLUE: {
+			labelColor: "#157EFB",
+			borderColor: "#157EFB",
+			fillColor: "#FFFFFF",
+			moonColor: "#71B0FB"
+		},
+		GREEN: {
+			labelColor: "#157EFB",
+			borderColor: "#157EFB",
+			fillColor: "#FFFFFF",
+			moonColor: "#71B0FB"
+		}
 	},
 
-	csbPLUS_ICON: "plus",
-	csbMINUS_ICON: "minus",
-	csbEXCLUDE_ICON: "exclude",
+	cobICON: {
+		PLUS: 'plus',
+		MINUS: 'minus',
+		EXCLUDE: 'exclude'
+	},
 
-	csbDOTTED_LINE: "dotted",
-	csbSOLID_LINE: "solid",
+	cobLINE: {
+		DOTTED: 'dotted',
+		SOLID: 'solid'
+	},
+
+	cobZOOM: {
+		BIGGEST: 16,
+		EXPANDED: 8,
+		GALAXY: 4,
+		PLANET: 2,
+		SATELLITE: 1,
+		HIDDEN: 0
+	},
 
 	fobDefaultStyle: function() {
 		return this.cobGRAY_THEME;
