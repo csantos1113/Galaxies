@@ -182,40 +182,39 @@ function init() {
 	espacioTexto = new createjs.Shape();
 	espacioTexto.name = "galaxiaTexto";
 	espacioTexto.graphics.setStrokeStyle(1, 'round', 'round')
-		.beginStroke('blue')
+		.beginStroke("rgba(255, 255, 255, 1)")
 		//.setStrokeDash([5, 10], 0)
-		.beginFill("#FFFFFF").drawCircle(0, 0, textoRadius)
+		.beginFill("rgba(255, 255, 255, 1)")
+		.drawCircle(0, 0, textoRadius)
 		.endStroke()
 		.endFill();
+	espacioTexto.cursor = "pointer";
 
-
-	/*text = new createjs.Text("Esternocleidomastoideo...", "27px Arial", "black");
-	text.textBaseline = "middle";
-	text.cursor = 'pointer';
-	text.textAlign = "center";*/
 	//text.x = 0;
 	wi = textoRadius * 2 - 40;
-	he = textoRadius * 2 - 90;
+	he = textoRadius * 2 - 120;
 	text = new txt.Text({
-		text: 'Hola mundo donde esto',
+		text: 'Colombia hola mundodfdfdfg',
 		font: 'Arial',
+		//singleLine: true,
 		align: txt.Align.MIDDLE_CENTER,
-		//width: wi,
-		//height: he,
+		minSize: 27,
+		lineHeight: 27,
+		width: wi,
+		height: he,
 		size: 27,
-		x: 0,
-		y: 0
+		x: -textoRadius + 20,
+		y: -textoRadius + 60,
+		debug: false
 	});
 	containerText = new createjs.Container();
 	containerText.setBounds(0, 0, wi, he);
-	rect = new createjs.Shape();
-	rect.graphics.beginStroke("#000").rect(-textoRadius + 20, -textoRadius + 45, wi, he);
 	//text.lineWidth = wi;
 	//text.y = -textoRadius + 45;
 	//text.textBaseline = "middle";
 	//text.textAlign = "center";
 
-	containerText.addChild(rect);
+	containerText.addChild(espacioTexto, text);
 
 	contenedorBola.addChild(ball, containerText);
 
