@@ -1,0 +1,93 @@
+Información de createJS
+
+
+
+
+Set de colores:
+ ☐ gris (por defecto)
+ ☐ fucsia
+ ☐ azul
+ ☐ verde
+Set de iconos:
+ ☐ mas (+)
+ ☐ menos (-)
+ ☐ excluir (↔)
+
+//Modelo que se ofrece para los casos en que se necesita construir una galaxia de manera informativa
+BasicDataModel:
+ ☐ DISPLAY
+ ☐ 
+
+Action:
+ config:
+   ☐ sbIcon
+   ☐ isbColor
+   ☐ sbTooltip
+   ☐ openId
+ methods:
+   ☐ destroy
+
+Galaxy:
+ config:
+   ☐ obData //Requerido
+   ☐ sbDisplayField //[1,2]
+   ☐ sbLineType // [DOTTED, SOLID]
+   ☐ sbTheme // [red, blue, yellow]
+   ☐ arActions // [0-2]
+   ☐ arChildrenGalaxy
+   ☐ defaultChildConfig
+   ☐ obParentGalaxy
+   ☐ blDestroyIfEmpty
+GalaxyController:
+ methods:
+   ☐ fobAddChild(data, {displayField, lineType, color, actions}) //Permite adicionar un hijo, recibe la data del hijo, <puede configurar un comportamiento>diferente para este hijo
+   ☐ fobRemoveChild(data)    //Recibe la data del hijo para borrarlo, retorna el GalaxyModel equivalente
+   ☐ fobAddAction(actionData)//Adiciona un botón de acción
+   ☐ fobRemoveAction(openId) //Remueve un botón de acción según el openId
+   ☐ removeChildren()        //Elimina todos los hijos
+   ☐ removeActions()         //Elimina todos los botones de acción
+   ☐ removeAll()             //Elimina todos los hijos y botones de acción
+   ☐ destroy()               //Elimina todos los hijos y botones de acción y se destruye a él
+
+
+   -- Si tiene hijos, o tiene acciones: descender, de lo contrario: fireEvent("detail")
+ events:
+   ☐ evupdatearactions //Se dispara cuando se actualizan 
+
+
+ validations:
+   ☐ La galaxia PADRE es la única que puede tener DISPLAY_FIELDS en null
+   ☐ 
+   ☐ 
+
+GalaxyComponent:
+  config:
+    ☐ initialData
+    ☐ displayField
+    ☐ lineType
+    ☐ color
+    ☐ actions
+    ☐ childrenData
+    ☐ required
+    ☐ readOnly
+    ☐ dottedConvention
+    ☐ solidConvention
+  properties:
+    ☐ currentGalaxy
+    ☐ galaxyRelations
+GalaxyComponentController:
+  methods:
+    ☐ fobAddChild(data, {parentGalaxy, displayField, lineType, color, actions}) //Permite adicionar un hijo a la galaxia current o a una galaxia específica, <puede configurar un comportamiento>
+    ☐ fobRemoveChild(data, {parentGalaxy}) //Borra un hijo de la galaxia current o de una galaxia específica
+    ☐ removeAll() //Borra todos los hijos de la galaxia
+    ☐ getValues(blOnlyData) //retorna todos los modelos de la galaxia, puede retornar solo los datos
+    ☐ navTo
+    ☐ farFindGalaxy(sbKeyword)
+
+    ☐ isCurrent(galaxy) //Valida si la galaxia actual es la current
+    ☐ onAddChildren(obAffectedGalaxy, arChildrenAdded)
+    ☐ onRemoveChildren(obAffectedGalaxy, arChildrenRemoved)
+    ☐ onAddActions(obAffectedGalaxy, arActionsAdded)
+    ☐ onRemoveActions(obAffectedGalaxy, arActionsRemoved)
+  events:
+    ☐ 

@@ -1,0 +1,22 @@
+{
+  "name": "Galaxies",
+  "version": "1.0.0",
+  "description": "Galaxies",
+  "main": "Point",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "galaxies"
+  ],
+  "dependencies": {
+    "express": "~4.2.0"
+  },
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "author": "CSantos",
+  "license": "ISC"
+}

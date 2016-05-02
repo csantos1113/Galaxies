@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project name="Galaxies" default=".help">
+    <import file="${basedir}/.sencha/package/build-impl.xml"/>
+    <!--<include file="${workspace.dir}/tools/builder/OpenBuilder.xml" as="OBuilder"/>-->
+    <include file="${basedir}/../../tools/builder/OpenBuilder.xml" as="OBuilder"/>
+
+    <target name="-after-init">
+        <antcallback target="OBuilder.-after-init" return="${name.properties.returned}"/>
+    </target>
+
+    <target name="-after-build">
+        <antcall target="OBuilder.-after-build"/>
+    </target>
+
+</project>
