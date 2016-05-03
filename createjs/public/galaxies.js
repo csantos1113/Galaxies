@@ -10,7 +10,7 @@ planetaposicion = total / cantidadPlanetas;
 
 function hacerPlaneta(galaxia, isbName, radioGalaxia, nuLunas) {
 	galaxia.planetas = galaxia.planetas || [];
-	galaxia.basePlaneta = galaxia.basePlaneta || (planetaposicion / 1);
+	galaxia.basePlaneta = galaxia.basePlaneta || (planetaposicion / 2);
 	galaxia.basePlaneta += planetaposicion;
 	var angle = galaxia.basePlaneta,
 		radiusPlaneta = 41,
@@ -161,7 +161,6 @@ function init() {
 	stage.autoClear = true;
 	stage.enableMouseOver();
 
-
 	var radius = (298 / 2),
 		centerY = canvas.height / 2,
 		centerX = canvas.width / 2;
@@ -194,7 +193,7 @@ function init() {
 	//text.x = 0;
 	wi = textoRadius * 2 - 40;
 	he = textoRadius * 2 - 120;
-	textBig = new txt.Text({
+	text = new txt.Text({
 		text: 'Colombia hola mundodfdfdfg',
 		font: 'Arial',
 		//singleLine: true,
@@ -206,10 +205,8 @@ function init() {
 		size: 27,
 		x: -textoRadius + 20,
 		y: -textoRadius + 60,
-		debug: false,
-		strokeColor: "green"
+		debug: false
 	});
-	textBig.color = "green";
 	containerText = new createjs.Container();
 	containerText.setBounds(0, 0, wi, he);
 	//text.lineWidth = wi;
@@ -217,7 +214,7 @@ function init() {
 	//text.textBaseline = "middle";
 	//text.textAlign = "center";
 
-	containerText.addChild(espacioTexto, textBig);
+	containerText.addChild(espacioTexto, text);
 
 	contenedorBola.addChild(ball, containerText);
 
@@ -226,7 +223,7 @@ function init() {
 	hacerPlaneta(contenedorBola, "Santander", radius, 6);
 	hacerPlaneta(contenedorBola, "Santander", radius, 6);
 	hacerPlaneta(contenedorBola, "Santander", radius, 6);
-	//hacerPlaneta(contenedorBola, "Santander", radius, 6);
+	hacerPlaneta(contenedorBola, "Santander", radius, 6);
 	inserteAccion(contenedorBola, radius);
 
 
