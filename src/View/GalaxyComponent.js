@@ -5,8 +5,8 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponent', {
 	config: {
 		obRecord: null,
 		sbDisplayField: null,
-		sbLineType: Galaxies_Util.csbSOLID_LINE,
-		obTheme: Galaxies_Util.cobGRAY_THEME,
+		sbLineType: Galaxies_Util.csbLINE.SOLID,
+		obTheme: Galaxies_Util.cobTHEME.GRAY,
 		blDestroyIfEmpty: false,
 		arActions: [],
 		defaultChildConfig: {},
