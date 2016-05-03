@@ -25,6 +25,7 @@ Ext.define('OUIsp.Galaxies.View.Galaxy', {
 	updateBlReadOnly: function() {
 		//Apagar o prender los botones de las acciones
 	},
+
 	setNuZoom: function(inuZoom) {
 		//Se ejecuta solo si el componente no se ha inicializado
 		//Se ejecuta solo si viene desde Evolve o Devolve
@@ -45,7 +46,7 @@ Ext.define('OUIsp.Galaxies.View.Galaxy', {
 		//Si es el mismo en que yo YA estoy, no hago nada.
 		//Si es diferente, debo evolucionar o involucionar segun mi hijo
 	},
-	onChangeZoomParent:function(iblEvolved) {
+	onChangeZoomParent: function(iblEvolved) {
 		//Segun el cambio de mi padre, identificar el estado en que yo debo quedar.
 		//Si es el mismo en que yo YA estoy, no hago nada.
 		//Si es diferente, debo evolucionar o involucionar segun mi padre

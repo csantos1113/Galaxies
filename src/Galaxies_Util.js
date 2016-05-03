@@ -10,10 +10,10 @@ Ext.define('OUIsp.Galaxies.Util', {
 			moonColor: ""
 		},
 		FUCHSIA: {
-			labelColor: "#157EFB",
-			borderColor: "#157EFB",
-			fillColor: "#FFFFFF",
-			moonColor: "#71B0FB"
+			labelColor: "red",
+			borderColor: "red",
+			fillColor: "red",
+			moonColor: "red"
 		},
 		BLUE: {
 			labelColor: "#157EFB",
@@ -22,10 +22,10 @@ Ext.define('OUIsp.Galaxies.Util', {
 			moonColor: "#71B0FB"
 		},
 		GREEN: {
-			labelColor: "#157EFB",
-			borderColor: "#157EFB",
-			fillColor: "#FFFFFF",
-			moonColor: "#71B0FB"
+			labelColor: "green",
+			borderColor: "green",
+			fillColor: "green",
+			moonColor: "green"
 		}
 	},
 
