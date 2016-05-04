@@ -17,8 +17,14 @@ Ext.define('OUIsp.Galaxies.View.Galaxy', {
 		 */
 		obParentGalaxy: null,
 
-		nuZoom: Galaxies_Util.cobZOOM.HIDDEN
+		nuLevel: Galaxies_Util.cobLEVEL.HIDDEN
 
+	},
+	statics: {
+		cnuRADIUS_EXPANDED: 372.5,
+		cnuRADIUS_GALAXY: 149,
+		cnuRADIUS_PLANET: 41,
+		cnuRADIUS_MOON: 8.5
 	},
 
 
@@ -26,29 +32,53 @@ Ext.define('OUIsp.Galaxies.View.Galaxy', {
 		//Apagar o prender los botones de las acciones
 	},
 
-	setNuZoom: function(inuZoom) {
+	setNuLevel: function(inuLevel) {
 		//Se ejecuta solo si el componente no se ha inicializado
 		//Se ejecuta solo si viene desde Evolve o Devolve
 		//
 		//De lo contrario, console.warn indicando que no se puede cambiar dinamicamente
 	},
-	updateNuZoom: function(inuNewZoom, inuOldZoom) {
+	updateNuLevel: function(inuNewLevel, inuOldLevel) {
 		//Solo se ejecuta si se ha inicializado
 		//Dispara el evento zoomchanged, informado si evoluciono o involuciono
 		//Usado para que sus papas y sus hijos se adapten tambien
 	},
 
-	Evolve: function() {},
-	Devolve: function() {},
+	fobEvolve: function() {
+		//Cambia el nivel hacia arriba
+		return this.fobChangeLevel(true);
+	},
+	fobDevolve: function() {
+		//Cambia el nivel hacia abajo
+		return this.fobChangeLevel(false);
+	},
+	
+	//@private
+	fobChangeLevel: function(iblEvolve) {
+		//Dependiendo del nivel en el que esté la galaxia actualmente, se mueve hacia su siguiente nivel (si iblEvolve es true)
+		//se mueve hacia su nivel anterior (si iblEvolve es false)
 
-	onChangeZoomChild: function(iblEvolved) {
+		if (true /*El nivel a donde se movió es el mismo actual. Ejm: BIGGEST to BIGGEST*/ ) {
+			//Retorna el mismo componente cacheado
+			return this.fobComponent(true);
+		}
+		//Si no, se solicita el nuevo componente
+		return this.fobComponent(true);
+	},
+
+	onChangeLevelChild: function(iblEvolved) {
 		//Segun el cambio de mi hijo, identificar el estado en que yo debo quedar.
 		//Si es el mismo en que yo YA estoy, no hago nada.
 		//Si es diferente, debo evolucionar o involucionar segun mi hijo
 	},
-	onChangeZoomParent: function(iblEvolved) {
+	onChangeLevelParent: function(iblEvolved) {
 		//Segun el cambio de mi padre, identificar el estado en que yo debo quedar.
 		//Si es el mismo en que yo YA estoy, no hago nada.
 		//Si es diferente, debo evolucionar o involucionar segun mi padre
 	},
+
+	//
+	fobComponent: function(iblFromCache) {
+
+	}
 });

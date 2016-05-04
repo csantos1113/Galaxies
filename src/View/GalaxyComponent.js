@@ -1,3 +1,7 @@
+// incluye la libreria 'ol/ol.js
+// NO BORRAR
+ServerFileRequest.ReplaceMeLibrary("OUIspecialized/Galaxies/resources/libs/ol/ol.js");
+
 Ext.define('OUIsp.Galaxies.View.GalaxyComponent', {
 
 	xtype: 'OUIsp_Galaxies_Example_GalaxyComponent',

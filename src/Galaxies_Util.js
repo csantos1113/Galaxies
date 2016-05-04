@@ -40,13 +40,52 @@ Ext.define('OUIsp.Galaxies.Util', {
 		SOLID: 'solid'
 	},
 
-	cobZOOM: {
+	cobLEVEL: {
 		BIGGEST: 16,
 		EXPANDED: 8,
 		GALAXY: 4,
 		PLANET: 2,
 		SATELLITE: 1,
 		HIDDEN: 0
+	},
+
+	constructor: function() {
+		var me = this,
+			obLEVEL = me.cobLEVEL;
+		me.arOrderLevel = [
+			obLEVEL.BIGGEST,
+			obLEVEL.EXPANDED,
+			obLEVEL.GALAXY,
+			obLEVEL.PLANET,
+			obLEVEL.SATELLITE,
+			obLEVEL.HIDDEN
+		];
+	},
+
+	fnuNextLevel: function(inuCurrentLevel) {
+		var me = this,
+			arOrderLevel = me.arOrderLevel,
+			nuPosition;
+		nuPosition = arOrderLevel.indexOf(inuCurrentLevel);
+		if (nuPosition > 0) {
+			return arOrderLevel[nuPosition - 1];
+		}
+		return inuCurrentLevel;
+	},
+
+	fnuPrevLevel: function(inuCurrentLevel) {
+		var me = this,
+			obLEVEL = me.cobLEVEL,
+			arOrderLevel = me.arOrderLevel,
+			nuPosition;
+		nuPosition = arOrderLevel.indexOf(inuCurrentLevel);
+		//Si la posición es la última
+		if (nuPosition == arOrderLevel.length - 1) {
+			//Se retorna esa misma posición
+			return inuCurrentLevel;
+		}
+		//Si no, se retorna la siguiente posición
+		return arOrderLevel[nuPosition + 1];
 	},
 
 	fobDefaultStyle: function() {
