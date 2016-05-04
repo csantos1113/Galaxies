@@ -1,6 +1,6 @@
 Ext.define('OUIsp.Galaxies.View.Galaxy', {
 
-	xtype: 'OUIsp_Galaxies_Example_Galaxy',
+	xtype: 'OUIsp_Galaxies_Galaxy',
 
 	config: {
 		obRecord: null,
@@ -30,6 +30,7 @@ Ext.define('OUIsp.Galaxies.View.Galaxy', {
 
 	updateBlReadOnly: function() {
 		//Apagar o prender los botones de las acciones
+		//u todos mis hijos, traspasarle este valor
 	},
 
 	setNuLevel: function(inuLevel) {
@@ -52,7 +53,7 @@ Ext.define('OUIsp.Galaxies.View.Galaxy', {
 		//Cambia el nivel hacia abajo
 		return this.fobChangeLevel(false);
 	},
-	
+
 	//@private
 	fobChangeLevel: function(iblEvolve) {
 		//Dependiendo del nivel en el que esté la galaxia actualmente, se mueve hacia su siguiente nivel (si iblEvolve es true)

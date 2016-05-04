@@ -1,6 +1,6 @@
 Ext.define('OUIsp.Galaxies.View.Action', {
 
-	xtype: 'OUIsp_Galaxies_Example_Action',
+	xtype: 'OUIsp_Galaxies_Action',
 	/**
 	 * EVENTOS:
 	 * - tap: Se dispara cuando se toca el botón
