@@ -35,6 +35,7 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponent', {
 		arChildren: []
 	},
 
+	obInitialGalaxy: null,
 	obCurrentGalaxy: null,
 	arGalaxyRelations: [],
 
@@ -47,7 +48,7 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponent', {
 		//Se llama al callParent para inicializar la clase genérica
 		me.callParent();
 		me.setHtml(me.fsbTemplate());
-
+		me.initCreateJS();
 		me.buildInitialGalaxy();
 	},
 
@@ -55,6 +56,11 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponent', {
 		//Retorna el html base del componete: titulo y canvas
 		//Si tiene sbTitle, adiciona la clase: 'has-title' al componente
 		return "<div>Titulo</div><canvas class='galaxy-stage'></canvas><div>fobConvention</div>";
+	},
+
+	initCreateJS: function() {
+		//Se busca el DOM del elemento canvas
+		//Se inicia el stage de createJS con su configuración y se cachea
 	},
 
 	updateSbTitle: function(isbNew, isbOld) {
@@ -120,18 +126,28 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponent', {
 	fobTitle: function() {
 		//Retorna el DOM del elemento titulo, lo cachea
 	},
-	fobArea: function() {
-		//Retorna el DOM del elemento canvas, lo cachea
-	},
 	fobConvention: function() {
 		//Retorna el DOM del elemento donde ver las convenciones, lo cachea
 	},
 
 	buildInitialGalaxy: function() {
-
+		//Hace un Ext.create( de un Galaxy.js)
+		//pasando todas las propiedades que están aquí para delegarselas al Galaxy
+		//El nivel por defecto para esta galaxia es: Galaxies_Util.cobLEVEL.GALAXY
+		var Galaxya = Ext.create("Galaxyyy", {
+			a: me.getA(),
+			b: 1,
+			c: 2,
+			nuLevel: Galaxies_Util.cobLEVEL.GALAXY
+		});
+		//Se guarda la galaxia en el caché
+		me.obInitialGalaxy = me.obCurrentGalaxy = Galaxya;
+		//Se obtiene el componete y se adiciona al stage
+		obComponent = me.obInitialGalaxy.fobComponent();
 	},
 
 	fobGetInitialGalaxy: function() {
-
+		//Retorna la galaxia inicial
+		return this.obInitialGalaxy;
 	}
 });
