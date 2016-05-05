@@ -1,6 +1,10 @@
 Ext.define('OUIsp.Galaxies.View.Galaxy', {
-
 	xtype: 'OUIsp_Galaxies_Galaxy',
+	requires: [
+		'OUIsp.Galaxies.View.GalaxyController',
+		'OUIsp.Galaxies.View.Action'
+	],
+	controller: 'galaxyController',
 
 	config: {
 		obRecord: null,
@@ -81,5 +85,27 @@ Ext.define('OUIsp.Galaxies.View.Galaxy', {
 	//
 	fobComponent: function(iblFromCache) {
 
+	},
+
+	farChildComponents: function() {
+
+	},
+
+	farActionComponents: function() {
+
+	},
+
+	farOrganizeChildren: function(iarChildComponents, iarActionComponents) {
+		//Dependiendo de:
+		//- mi nivel
+		//- la cantidad de hijos
+		//- la cantidad de acciones
+		//
+		//Se hace:
+		//- Si mi nivel es galaxia:
+		//  - Creación de otro container que contendrá de manera vertical: al inicio las acciones, y seguido los planetas
+		//- Si mi nivel es planeta:
+		//  - Mostrar máximo 6 lunas sobre mi circulo, y ocultar los botones
+		//- Cualquier otro nivel: no hacer nada y devolver array vacío
 	}
 });

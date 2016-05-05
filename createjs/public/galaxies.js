@@ -83,6 +83,26 @@ function inserteLuna(planeta, radioPlaneta) {
 		scaleY: 0
 	});
 	luna.on("pressmove", handleMove, this);
+
+	luna.on("click", function() {
+		console.log("click", arguments);
+	}, this);
+
+	luna.on("added", function() {
+		console.log("added", arguments);
+	}, this);
+	luna.on("mousedown", function() {
+		console.log("mousedown", arguments);
+	}, this);
+	luna.on("mouseout", function() {
+		console.log("mouseout", arguments);
+	}, this);
+	luna.on("mouseover", function() {
+		console.log("mouseover", arguments);
+	}, this);
+
+
+	
 	createjs.Tween.get(luna, {
 			loop: false
 		})

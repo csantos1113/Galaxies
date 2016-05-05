@@ -5,6 +5,11 @@ ServerFileRequest.ReplaceMeLibrary("OUIspecialized/Galaxies/resources/libs/ol/ol
 Ext.define('OUIsp.Galaxies.View.GalaxyComponent', {
 	extend: 'OUI.Container.Container',
 	xtype: 'OUIsp_Galaxies_GalaxyComponent',
+	requires: [
+		'OUIsp.Galaxies.View.GalaxyComponentController',
+		'OUIsp.Galaxies.View.Galaxy'
+	],
+	controller: 'galaxyComponentController',
 
 	config: {
 		//Titulo del contenedor de galaxias
@@ -74,15 +79,6 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponent', {
 	updateSbDottedConvention: function(isbNewValue, isbOldValue) {
 		this.buildConventions();
 	},
-	buildConventions: function() {
-		//Se obtiene las convenciones de Solido y de Punteado
-		//Si almenos hay una, se adiciona la clase 'has-conventions' al componente
-		//Sino, se remueve la clase 'has-conventions'
-		//
-		//Se construye el html que detalla las convenciones
-		//Se escucha el evento tap sobre el botón que muestra las convenciones (toggleConventions)
-	},
-
 
 	updateBlReadOnly: function(iblNewValue, iblOldValue) {
 		//Si no está inicializado, return
@@ -120,9 +116,6 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponent', {
 		//Si no está inicializado, return
 		//Si está inicializado: traspasar esta propiedad a la galaxia inicial
 	},
-	toggleConventions: function() {
-		//Adiciona u remueve la clase 'conventions-showed' al componente
-	},
 	fobTitle: function() {
 		//Retorna el DOM del elemento titulo, lo cachea
 	},
@@ -130,11 +123,24 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponent', {
 		//Retorna el DOM del elemento donde ver las convenciones, lo cachea
 	},
 
+	buildConventions: function() {
+		//Se obtiene las convenciones de Solido y de Punteado
+		//Si almenos hay una, se adiciona la clase 'has-conventions' al componente
+		//Sino, se remueve la clase 'has-conventions'
+		//
+		//Se construye el html que detalla las convenciones
+		//Se escucha el evento tap sobre el botón que muestra las convenciones (toggleConventions)
+	},
+
+	toggleConventions: function() {
+		//Adiciona u remueve la clase 'conventions-showed' al componente
+	},
+
 	buildInitialGalaxy: function() {
 		//Hace un Ext.create( de un Galaxy.js)
 		//pasando todas las propiedades que están aquí para delegarselas al Galaxy
 		//El nivel por defecto para esta galaxia es: Galaxies_Util.cobLEVEL.GALAXY
-		var Galaxya = Ext.create("Galaxyyy", {
+		var Galaxya = Ext.create('OUIsp.Galaxies.View.Galaxy', {
 			a: me.getA(),
 			b: 1,
 			c: 2,
@@ -142,8 +148,10 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponent', {
 		});
 		//Se guarda la galaxia en el caché
 		me.obInitialGalaxy = me.obCurrentGalaxy = Galaxya;
-		//Se obtiene el componete y se adiciona al stage
+		//Se obtiene el componente
 		obComponent = me.obInitialGalaxy.fobComponent();
+		//Se adiciona al stage
+		me.stage.addChild(obComponent);
 	},
 
 	fobGetInitialGalaxy: function() {

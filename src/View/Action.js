@@ -1,11 +1,14 @@
 Ext.define('OUIsp.Galaxies.View.Action', {
-
 	xtype: 'OUIsp_Galaxies_Action',
+	requires: [
+		'OUIsp.Galaxies.View.ActionController'
+	],
+	controller: 'actionController',
+
 	/**
 	 * EVENTOS:
-	 * - tap: Se dispara cuando se toca el botón
+	 * - evtap: Se dispara cuando se toca el botón
 	 */
-
 
 	config: {
 		sbTooltip: null,
@@ -24,5 +27,9 @@ Ext.define('OUIsp.Galaxies.View.Action', {
 	},
 	setSbIcon: function() {
 		//Si ya está inicializado, warn diciendo que no se puede cambiar después de creado
+	},
+	
+	fobComponent: function() {
+
 	}
 });
