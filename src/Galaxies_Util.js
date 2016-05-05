@@ -12,7 +12,7 @@ Ext.define('OUIsp.Galaxies.Util', {
 		FUCHSIA: {
 			labelColor: "red",
 			borderColor: "red",
-			fillColor: "red",
+			fillColor: "rgba(210,0,4,0.2)",
 			moonColor: "red"
 		},
 		BLUE: {
@@ -24,7 +24,7 @@ Ext.define('OUIsp.Galaxies.Util', {
 		GREEN: {
 			labelColor: "green",
 			borderColor: "green",
-			fillColor: "green",
+			fillColor: "rgba(0,210,4,0.2)",
 			moonColor: "green"
 		}
 	},
@@ -109,5 +109,8 @@ Ext.define('OUIsp.Galaxies.Util', {
 
 	fblIsGalaxy: function(inuLevel) {
 		return inuLevel === this.cobLEVEL.GALAXY;
+	},
+	fblIsDotted: function(isbLineType) {
+		return isbLineType === this.cobLINE.DOTTED;
 	}
 });

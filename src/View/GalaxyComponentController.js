@@ -70,7 +70,8 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponentController', {
 	 */
 	BuildInitialGalaxy: function() {
 		var me = this,
-			obView = me.getView();
+			obView = me.getView(),
+			obCanvas = obView.fobCanvas();
 
 		//Se guarda la galaxia en el caché
 		me.obInitialGalaxy = me.obCurrentGalaxy = Ext.create('OUIsp.Galaxies.View.Galaxy', {
@@ -87,6 +88,21 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponentController', {
 		});
 		//Se obtiene el componente
 		obComponent = me.obInitialGalaxy.fobComponent();
+		var fnAdjustXY = function() {
+			var nuWidth = obCanvas.getWidth(),
+				nuHeight = obCanvas.getHeight(),
+				obMiddlePoint = {
+					x: nuWidth / 2,
+					y: nuHeight / 2
+				};
+			obComponent.x = obMiddlePoint.x;
+			obComponent.y = obMiddlePoint.y;
+		};
+		if (obCanvas.isPainted()) {
+			fnAdjustXY();
+		} else {
+			obView.on("painted", fnAdjustXY);
+		}
 		//Se adiciona al obStage
 		me.obStage.addChild(obComponent);
 	},

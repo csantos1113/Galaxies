@@ -91,19 +91,23 @@ Ext.define('OUIsp.Galaxies.View.Galaxy', {
 	fobComponent: function(iblFromCache) {
 		console.log("wait fobComponent");
 		var me = this,
+			obSelf = me.self,
 			nuLevel = me.getNuLevel(),
 			obUtil = Galaxies_Util,
 			obTheme = me.getObTheme(),
 			contenedorBola = new createjs.Container();
 		contenedorBola.name = 'contenedorBola';
 		if (obUtil.fblIsGalaxy(nuLevel)) {
-			var radius = me.cnuRADIUS_GALAXY,
+			var radius = obSelf.cnuRADIUS_GALAXY,
 				ball = new createjs.Shape();
 			ball.name = me.getId();
-			ball.graphics.setStrokeStyle(3, 'round', 'round')
-				.beginStroke(obTheme.borderColor)
-				//.setStrokeDash([5, 10], 0)
-				.beginFill(obTheme.fillColor).drawCircle(0, 0, radius)
+			var obGraphic = ball.graphics
+				.setStrokeStyle(3, 'round', 'round')
+				.beginStroke(obTheme.borderColor);
+			if (obUtil.fblIsDotted(me.getSbLineType())) {
+				obGraphic.setStrokeDash([5, 10], 0);
+			}
+			obGraphic.beginFill(obTheme.fillColor).drawCircle(0, 0, radius)
 				.endStroke()
 				.endFill();
 			/*textoRadius = radius - 41;

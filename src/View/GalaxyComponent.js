@@ -60,7 +60,7 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponent', {
 	 * @private
 	 */
 	fsbTemplate: function() {
-		return "<div class='o-galaxy-title'></div><canvas class='o-galaxy-stage' width='600' height='500'></canvas><div class='o-galaxy-convention'></div>";
+		return "<div class='o-galaxy-title'></div><canvas class='o-galaxy-stage' width='600' height='500' style='border:1px solid rgba(255, 0, 0, 0.3)'></canvas><div class='o-galaxy-convention'></div>";
 	},
 
 	initCreateJS: function() {
