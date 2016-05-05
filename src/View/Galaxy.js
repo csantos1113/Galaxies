@@ -1,4 +1,5 @@
 Ext.define('OUIsp.Galaxies.View.Galaxy', {
+	extend: 'Ext.Widget',
 	xtype: 'OUIsp_Galaxies_Galaxy',
 	requires: [
 		'OUIsp.Galaxies.View.GalaxyController',
@@ -9,7 +10,7 @@ Ext.define('OUIsp.Galaxies.View.Galaxy', {
 	config: {
 		obRecord: null,
 		sbDisplayField: null,
-		sbLineType: Galaxies_Util.csbLINE.SOLID,
+		sbLineType: Galaxies_Util.cobLINE.SOLID,
 		obTheme: Galaxies_Util.cobTHEME.GRAY,
 		blDestroyIfEmpty: false,
 		arActions: [],
@@ -37,11 +38,15 @@ Ext.define('OUIsp.Galaxies.View.Galaxy', {
 		//u todos mis hijos, traspasarle este valor
 	},
 
-	setNuLevel: function(inuLevel) {
+	setNuLevel: function(inuLevel, iblInternal) {
+		var me = this;
+
 		//Se ejecuta solo si el componente no se ha inicializado
 		//Se ejecuta solo si viene desde Evolve o Devolve
-		//
-		//De lo contrario, console.warn indicando que no se puede cambiar dinamicamente
+		if (!me.initialized || iblInternal === true) {
+			return this.callParent(arguments);
+		}
+		console.warn("Este valor no puede modificarse dinámicamente");
 	},
 	updateNuLevel: function(inuNewLevel, inuOldLevel) {
 		//Solo se ejecuta si se ha inicializado
@@ -84,7 +89,60 @@ Ext.define('OUIsp.Galaxies.View.Galaxy', {
 
 	//
 	fobComponent: function(iblFromCache) {
+		console.log("wait fobComponent");
+		var me = this,
+			nuLevel = me.getNuLevel(),
+			obUtil = Galaxies_Util,
+			obTheme = me.getObTheme(),
+			contenedorBola = new createjs.Container();
+		contenedorBola.name = 'contenedorBola';
+		if (obUtil.fblIsGalaxy(nuLevel)) {
+			var radius = me.cnuRADIUS_GALAXY,
+				ball = new createjs.Shape();
+			ball.name = me.getId();
+			ball.graphics.setStrokeStyle(3, 'round', 'round')
+				.beginStroke(obTheme.borderColor)
+				//.setStrokeDash([5, 10], 0)
+				.beginFill(obTheme.fillColor).drawCircle(0, 0, radius)
+				.endStroke()
+				.endFill();
+			/*textoRadius = radius - 41;
+			espacioTexto = new createjs.Shape();
+			espacioTexto.name = "galaxiaTexto";
+			espacioTexto.graphics.setStrokeStyle(1, 'round', 'round')
+				.beginStroke("rgba(255, 255, 255, 1)")
+				//.setStrokeDash([5, 10], 0)
+				.beginFill("rgba(255, 0, 255, 0.1)")
+				.drawCircle(0, 0, textoRadius)
+				.endStroke()
+				.endFill();
+			espacioTexto.cursor = "pointer";*/
 
+			//text.x = 0;
+			//wi = textoRadius * 2 - 40;
+			//he = textoRadius * 2 - 100;
+			/*textBig = new txt.Text({
+				text: 'Colombia',
+				font: 'Arial',
+				//singleLine: true,
+				align: txt.Align.MIDDLE_CENTER,
+				minSize: 24,
+				lineHeight: 24,
+				width: wi,
+				height: he,
+				size: 24,
+				x: -textoRadius + 20,
+				y: -textoRadius + 50,
+				debug: true,
+				fillColor: "green"
+			});
+			textBig.fillColor = "blue";
+			/* //textBig.text = "Colombia";
+			containerText = new createjs.Container();
+			containerText.addChild(espacioTexto, textBig);*/
+			contenedorBola.addChild(ball);
+		}
+		return contenedorBola;
 	},
 
 	farChildComponents: function() {

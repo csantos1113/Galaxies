@@ -105,5 +105,9 @@ Ext.define('OUIsp.Galaxies.Util', {
 		var me = this;
 		return isbLineType === me.cobLINE.DOTTED ||
 			isbLineType === me.cobLINE.SOLID;
+	},
+
+	fblIsGalaxy: function(inuLevel) {
+		return inuLevel === this.cobLEVEL.GALAXY;
 	}
 });

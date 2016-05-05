@@ -21,14 +21,44 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponentController', {
 		});
 	},
 
+	/**
+	 * @property {Object} [obStage=null]
+	 * Marco de trabajo de createJS
+	 * @private
+	 */
+	obStage: null,
+
+	/**
+	 * @property {Object} [obInitialGalaxy=null]
+	 * Instancia de la galaxia inicial. Es decir, la galaxia padre.
+	 * @private
+	 */
+	obInitialGalaxy: null,
+	/**
+	 * @property {Object} [obCurrentGalaxy=null]
+	 * Instancia de la galaxia actual.
+	 * Es decir, la galaxia que se está viendo actualmente en su totalidad.
+	 * @private
+	 */
+	obCurrentGalaxy: null,
+
+	/**
+	 * @property {Array} [arGalaxyRelations=[]]
+	 * Relaciones padre-hijo entre todas las galaxias
+	 * @private
+	 */
+	arGalaxyRelations: [],
+
 	InitComponent: function() {
 		var me = this,
 			obView = me.getView(),
-			obCanvas = me.fobCanvas();
+			obStage,
+			obCanvas = obView.fobCanvas();
 
-		me.stage = new createjs.Stage(obCanvas.dom);
-		me.stage.autoClear = true;
-		me.stage.enableMouseOver();
+		obStage = me.obStage = new createjs.Stage(obCanvas.dom);
+		obStage.autoClear = true;
+		obStage.enableMouseOver();
+		createjs.Ticker.addEventListener("tick", obStage);
 		//Crea la galaxia base
 		me.BuildInitialGalaxy();
 	},
@@ -57,8 +87,8 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponentController', {
 		});
 		//Se obtiene el componente
 		obComponent = me.obInitialGalaxy.fobComponent();
-		//Se adiciona al stage
-		me.stage.addChild(obComponent);
+		//Se adiciona al obStage
+		me.obStage.addChild(obComponent);
 	},
 
 	/**
@@ -88,5 +118,5 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponentController', {
 		if (obInitialGalaxy[sbMethod]) {
 			obInitialGalaxy[sbMethod](iobNewValue);
 		}
-	},
+	}
 });

@@ -1,4 +1,5 @@
 Ext.define('OUIsp.Galaxies.View.Action', {
+	extend: 'Ext.Widget',
 	xtype: 'OUIsp_Galaxies_Action',
 	requires: [
 		'OUIsp.Galaxies.View.ActionController'

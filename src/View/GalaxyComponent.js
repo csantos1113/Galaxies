@@ -29,7 +29,7 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponent', {
 		//Campo de despliegue de la galaxia inicial
 		sbDisplayField: null,
 		//Tipo de linea de la galaxia inicial
-		sbLineType: Galaxies_Util.csbLINE.SOLID,
+		sbLineType: Galaxies_Util.cobLINE.SOLID,
 		//Tema de la galaxia inicial
 		obTheme: Galaxies_Util.cobTHEME.GRAY,
 		//Indica si la galaxia inicial se destruye una vez quede vacío
@@ -41,11 +41,6 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponent', {
 		//Galaxias hijas de la galaxia inicial
 		arChildren: []
 	},
-
-	obInitialGalaxy: null,
-	obCurrentGalaxy: null,
-	arGalaxyRelations: [],
-
 
 	initialize: function() {
 		//Adiciona una clase css para el componente
