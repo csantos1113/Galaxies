@@ -88,28 +88,22 @@ Ext.define('OUIsp.Galaxies.Util', {
 		return arOrderLevel[nuPosition + 1];
 	},
 
-	fobDefaultStyle: function() {
-		return this.cobGRAY_THEME;
-	},
-	fobDefaultLine: function() {
-		return this.csbSOLID_LINE;
-	},
 	fblValidStyle: function(iobStyle) {
 		var me = this;
-		return iobStyle === me.cobGRAY_COLOR ||
-			iobStyle === me.cobFUCHSIA_THEME ||
-			iobStyle === me.cobBLUE_THEME ||
-			iobStyle === me.cobGREEN_THEME;
+		return iobStyle === me.cobTHEME.GRAY ||
+			iobStyle === me.cobTHEME.FUCHSIA ||
+			iobStyle === me.cobTHEME.BLUE ||
+			iobStyle === me.cobTHEME.GREEN;
 	},
 	fblValidIcon: function(isbIconCfg) {
 		var me = this;
-		return isbIconCfg === me.csbPLUS_ICON ||
-			isbIconCfg === me.csbMINUS_ICON ||
-			isbIconCfg === me.csbEXCLUDE_ICON;
+		return isbIconCfg === me.cobICON.PLUS ||
+			isbIconCfg === me.cobICON.MINUS ||
+			isbIconCfg === me.cobICON.EXCLUDE;
 	},
 	fblValidLineType: function(isbLineType) {
 		var me = this;
-		return isbLineType === me.csbDOTTED_LINE ||
-			isbLineType === me.csbSOLID_LINE;
+		return isbLineType === me.cobLINE.DOTTED ||
+			isbLineType === me.cobLINE.SOLID;
 	}
 });

@@ -8,5 +8,85 @@
 Ext.define('OUIsp.Galaxies.View.GalaxyComponentController', {
 	extend: 'Ext.app.ViewController',
 	alias: 'controller.galaxyComponentController',
-	config: {}
+	config: {},
+
+	init: function(iobGalaxyComp) {
+		var me = this;
+		//eventos privados entre la vista y su ViewController
+		iobGalaxyComp.on({
+			ievAdjustTitle: 'AdjustTitle',
+			ievInitialize: 'InitComponent',
+			ievupdateproperty: 'onUpdateGalaxyProp',
+			scope: me
+		});
+	},
+
+	InitComponent: function() {
+		var me = this,
+			obView = me.getView(),
+			obCanvas = me.fobCanvas();
+
+		me.stage = new createjs.Stage(obCanvas.dom);
+		me.stage.autoClear = true;
+		me.stage.enableMouseOver();
+		//Crea la galaxia base
+		me.BuildInitialGalaxy();
+	},
+
+	/**
+	 * @method BuildInitialGalaxy
+	 * Crea la galaxia inicial de todo el componente.
+	 * Usa las propiedades configuradas en el componente para crear la galaxia.
+	 */
+	BuildInitialGalaxy: function() {
+		var me = this,
+			obView = me.getView();
+
+		//Se guarda la galaxia en el caché
+		me.obInitialGalaxy = me.obCurrentGalaxy = Ext.create('OUIsp.Galaxies.View.Galaxy', {
+			blReadOnly: obView.getBlReadOnly(),
+			obRecord: obView.getObRecord(),
+			sbDisplayField: obView.getSbDisplayField(),
+			sbLineType: obView.getSbLineType(),
+			obTheme: obView.getObTheme(),
+			blDestroyIfEmpty: obView.getBlDestroyIfEmpty(),
+			arActions: obView.getArActions(),
+			defaultChildConfig: obView.getDefaultChildConfig(),
+			//El nivel por defecto para esta galaxia es: Galaxies_Util.cobLEVEL.GALAXY
+			nuLevel: Galaxies_Util.cobLEVEL.GALAXY
+		});
+		//Se obtiene el componente
+		obComponent = me.obInitialGalaxy.fobComponent();
+		//Se adiciona al stage
+		me.stage.addChild(obComponent);
+	},
+
+	/**
+	 * @method AdjustTitle
+	 * busca el DOM del titulo y le actualiza el contenido según el nuevo valor
+	 * Se hace toggle de la clase 'has-title' si llega o no llega el nuevo valor
+	 *
+	 * @param  {String}    isbNewTitle [description]
+	 */
+	AdjustTitle: function(isbNewTitle) {
+		var me = this,
+			obGalaxyComp = me.getView(),
+			obTitle = me.fobTitle(),
+			sbTitle = isbNewTitle || me.getSbTitle() || "",
+			sbHasTitle = "has-title",
+			sbMethod = Ext.isEmpty(sbTitle) ? "removeCls" : "addCls";
+		//Se adiciona o remueve la clase del titulo
+		obGalaxyComp[sbMethod](sbHasTitle);
+		//Se ajusta el contenido del titulo
+		obTitle.setHtml(sbTitle);
+	},
+
+	onUpdateGalaxyProp: function(isbProperty, iobNewValue) {
+		var me = this,
+			obInitialGalaxy = me.obInitialGalaxy,
+			sbMethod = "set" + isbProperty;
+		if (obInitialGalaxy[sbMethod]) {
+			obInitialGalaxy[sbMethod](iobNewValue);
+		}
+	},
 });

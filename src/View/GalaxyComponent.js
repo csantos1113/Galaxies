@@ -1,6 +1,8 @@
-// incluye la libreria 'ol/ol.js
+// incluye la libreria 'createJS
 // NO BORRAR
-ServerFileRequest.ReplaceMeLibrary("OUIspecialized/Galaxies/resources/libs/ol/ol.js");
+ServerFileRequest.ReplaceMeLibrary("OUIspecialized/Galaxies/resources/libs/easeljs-NEXT.min.js");
+ServerFileRequest.ReplaceMeLibrary("OUIspecialized/Galaxies/resources/libs/tweenjs-NEXT.min.js");
+ServerFileRequest.ReplaceMeLibrary("OUIspecialized/Galaxies/resources/libs/txt.js");
 
 Ext.define('OUIsp.Galaxies.View.GalaxyComponent', {
 	extend: 'OUI.Container.Container',
@@ -50,17 +52,20 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponent', {
 		//Adiciona el html base del componete: titulo y canvas
 		var me = this;
 		me.addCls("o-galaxy-comp");
+		me.setHtml(me.fsbTemplate());
 		//Se llama al callParent para inicializar la clase genérica
 		me.callParent();
-		me.setHtml(me.fsbTemplate());
-		me.initCreateJS();
-		me.buildInitialGalaxy();
+		me.fireEvent("ievInitialize");
 	},
 
+	/**
+	 * @method fsbTemplate
+	 * Retorna el html base del componete: titulo y canvas
+	 * @return {String}    HTML base del componente
+	 * @private
+	 */
 	fsbTemplate: function() {
-		//Retorna el html base del componete: titulo y canvas
-		//Si tiene sbTitle, adiciona la clase: 'has-title' al componente
-		return "<div>Titulo</div><canvas class='galaxy-stage'></canvas><div>fobConvention</div>";
+		return "<div class='o-galaxy-title'></div><canvas class='o-galaxy-stage' width='600' height='500'></canvas><div class='o-galaxy-convention'></div>";
 	},
 
 	initCreateJS: function() {
@@ -68,9 +73,14 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponent', {
 		//Se inicia el stage de createJS con su configuración y se cachea
 	},
 
-	updateSbTitle: function(isbNew, isbOld) {
-		//busca el DOM del titulo y le actualiza el contenido según el nuevo valor
-		//Se hace toggle de la clase 'has-title' si llega o no llega el nuevo valor
+	updateSbTitle: function(isbNewTitle, isbOldTitle) {
+		var me = this;
+		//Si el componente ya está inicializado
+		if (me.initialized) {
+			//Se ajusta el contenido del título
+			me.AdjustTitle(isbNewTitle);
+			me.fireEvent("ievAdjustTitle", isbNewTitle);
+		}
 	},
 
 	updateSbSolidConvention: function(isbNewValue, isbOldValue) {
@@ -81,46 +91,118 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponent', {
 	},
 
 	updateBlReadOnly: function(iblNewValue, iblOldValue) {
-		//Si no está inicializado, return
-		//Si está inicializado: traspasar esta propiedad a la galaxia inicial
+		var me = this;
+		//Si está inicializado
+		if (me.initialized) {
+			//Se traspasa esta propiedad a la galaxia inicial
+			me.fireEvent("ievupdateproperty", "BlReadOnly", iblNewValue);
+		}
 	},
 	updateBlRequired: function(iblNewValue, iblOldValue) {
-		//Si no está inicializado, return
-		//Si está inicializado: traspasar esta propiedad a la galaxia inicial
+		var me = this;
+		//Si está inicializado
+		if (me.initialized) {
+			//Se traspasa esta propiedad a la galaxia inicial
+			me.fireEvent("ievupdateproperty", "BlRequired", iblNewValue);
+		}
 	},
 	updateObRecord: function(iobNewValue, iobOldValue) {
-		//Si no está inicializado, return
-		//Si está inicializado: traspasar esta propiedad a la galaxia inicial
+		var me = this;
+		//Si está inicializado
+		if (me.initialized) {
+			//Se traspasa esta propiedad a la galaxia inicial
+			me.fireEvent("ievupdateproperty", "ObRecord", iobNewValue);
+		}
 	},
 	updateSbDisplayField: function(isbNewValue, isbOldValue) {
-		//Si no está inicializado, return
-		//Si está inicializado: traspasar esta propiedad a la galaxia inicial
+		var me = this;
+		//Si está inicializado
+		if (me.initialized) {
+			//Se traspasa esta propiedad a la galaxia inicial
+			me.fireEvent("ievupdateproperty", "SbDisplayField", isbNewValue);
+		}
 	},
 	updateSbLineType: function(isbNewValue, isbOldValue) {
-		//Si no está inicializado, return
-		//Si está inicializado: traspasar esta propiedad a la galaxia inicial
+		var me = this;
+		//Si está inicializado
+		if (me.initialized) {
+			//Se traspasa esta propiedad a la galaxia inicial
+			me.fireEvent("ievupdateproperty", "SbLineType", isbNewValue);
+		}
 	},
 	updateObTheme: function(iobNewValue, iobOldValue) {
-		//Si no está inicializado, return
-		//Si está inicializado: traspasar esta propiedad a la galaxia inicial
+		var me = this;
+		//Si está inicializado
+		if (me.initialized) {
+			//Se traspasa esta propiedad a la galaxia inicial
+			me.fireEvent("ievupdateproperty", "ObTheme", iobNewValue);
+		}
 	},
 	updateBlDestroyIfEmpty: function(iblNewValue, iblOldValue) {
-		//Si no está inicializado, return
-		//Si está inicializado: traspasar esta propiedad a la galaxia inicial
+		var me = this;
+		//Si está inicializado
+		if (me.initialized) {
+			//Se traspasa esta propiedad a la galaxia inicial
+			me.fireEvent("ievupdateproperty", "BlDestroyIfEmpty", iblNewValue);
+		}
 	},
 	updateArActions: function(iarNewValue, iarOldValue) {
-		//Si no está inicializado, return
-		//Si está inicializado: traspasar esta propiedad a la galaxia inicial
+		var me = this;
+		//Si está inicializado
+		if (me.initialized) {
+			//Se traspasa esta propiedad a la galaxia inicial
+			me.fireEvent("ievupdateproperty", "ArActions", iarNewValue);
+		}
 	},
 	updateDefaultChildConfig: function(iobNewValue, iobOldValue) {
-		//Si no está inicializado, return
-		//Si está inicializado: traspasar esta propiedad a la galaxia inicial
+		var me = this;
+		//Si está inicializado
+		if (me.initialized) {
+			//Se traspasa esta propiedad a la galaxia inicial
+			me.fireEvent("ievupdateproperty", "DefaultChildConfig", iobNewValue);
+		}
 	},
+	/**
+	 * @method fobTitle
+	 * Retorna la referencia al elemento título del componente
+	 * @return {Object} Elemento título
+	 * @private
+	 */
 	fobTitle: function() {
 		//Retorna el DOM del elemento titulo, lo cachea
+		var me = this;
+		if (!me.cacheTitle) {
+			me.cacheTitle = me.element.down('.o-galaxy-title');
+		}
+		return me.cacheTitle;
 	},
+	/**
+	 * @method fobCanvas
+	 * Retorna el elemento DOM del elemento canvas
+	 * @return {Object}      Elemento donde ver el componete
+	 * @private
+	 */
+	fobCanvas: function() {
+		//Retorna el DOM del elemento titulo, lo cachea
+		var me = this;
+		if (!me.cacheTitle) {
+			me.cacheTitle = me.element.down('.o-galaxy-stage');
+		}
+		return me.cacheTitle;
+	},
+	/**
+	 * @method fobConvention
+	 * Retorna el DOM del elemento donde ver las convenciones
+	 * @return {Object}      Elemento donde ver las convenciones
+	 * @private
+	 */
 	fobConvention: function() {
-		//Retorna el DOM del elemento donde ver las convenciones, lo cachea
+		//Retorna el DOM del elemento convenciones, lo cachea
+		var me = this;
+		if (!me.cacheTitle) {
+			me.cacheTitle = me.element.down('.o-galaxy-convention');
+		}
+		return me.cacheTitle;
 	},
 
 	buildConventions: function() {
@@ -134,24 +216,6 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponent', {
 
 	toggleConventions: function() {
 		//Adiciona u remueve la clase 'conventions-showed' al componente
-	},
-
-	buildInitialGalaxy: function() {
-		//Hace un Ext.create( de un Galaxy.js)
-		//pasando todas las propiedades que están aquí para delegarselas al Galaxy
-		//El nivel por defecto para esta galaxia es: Galaxies_Util.cobLEVEL.GALAXY
-		var Galaxya = Ext.create('OUIsp.Galaxies.View.Galaxy', {
-			a: me.getA(),
-			b: 1,
-			c: 2,
-			nuLevel: Galaxies_Util.cobLEVEL.GALAXY
-		});
-		//Se guarda la galaxia en el caché
-		me.obInitialGalaxy = me.obCurrentGalaxy = Galaxya;
-		//Se obtiene el componente
-		obComponent = me.obInitialGalaxy.fobComponent();
-		//Se adiciona al stage
-		me.stage.addChild(obComponent);
 	},
 
 	fobGetInitialGalaxy: function() {
