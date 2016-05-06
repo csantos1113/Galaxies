@@ -12,24 +12,24 @@ Ext.define('OUIsp.Galaxies.View.Galaxy', {
 		sbDisplayField: null,
 		sbLineType: Galaxies_Util.cobLINE.SOLID,
 		obTheme: Galaxies_Util.cobTHEME.GRAY,
+		blReadOnly: false,
+		nuLevel: Galaxies_Util.cobLEVEL.HIDDEN,
 		blDestroyIfEmpty: false,
-		arActions: [],
 		defaultChildConfig: {},
 		arChildren: [],
-		blReadOnly: false,
+		arActions: [],
 		/**
 		 * @private
 		 */
-		obParentGalaxy: null,
-
-		nuLevel: Galaxies_Util.cobLEVEL.HIDDEN
-
+		obParentGalaxy: null
 	},
 	statics: {
 		cnuRADIUS_EXPANDED: 372.5,
 		cnuRADIUS_GALAXY: 149,
 		cnuRADIUS_PLANET: 41,
-		cnuRADIUS_MOON: 8.5
+		cnuRADIUS_MOON: 8.5,
+		cnuLIMIT_CHILDREN: 6,
+		cnuLIMIT_ACTIONS: 2
 	},
 
 
@@ -89,17 +89,22 @@ Ext.define('OUIsp.Galaxies.View.Galaxy', {
 
 	//
 	fobComponent: function(iblFromCache) {
-		console.log("wait fobComponent");
 		var me = this,
 			obSelf = me.self,
 			nuLevel = me.getNuLevel(),
 			obUtil = Galaxies_Util,
 			obTheme = me.getObTheme(),
-			contenedorBola = new createjs.Container();
-		contenedorBola.name = 'contenedorBola';
+			contenedorBola;
 		if (obUtil.fblIsGalaxy(nuLevel)) {
 			var radius = obSelf.cnuRADIUS_GALAXY,
 				ball = new createjs.Shape();
+			contenedorBola = me.cacheGalaxyContainer;
+			if (contenedorBola) {
+				return contenedorBola;
+			}
+			console.log("wait fobComponent");
+			contenedorBola = me.cacheGalaxyContainer = new createjs.Container();
+			contenedorBola.name = 'contenedorBola';
 			ball.name = me.getId();
 			var obGraphic = ball.graphics
 				.setStrokeStyle(3, 'round', 'round')
@@ -110,7 +115,8 @@ Ext.define('OUIsp.Galaxies.View.Galaxy', {
 			obGraphic.beginFill(obTheme.fillColor).drawCircle(0, 0, radius)
 				.endStroke()
 				.endFill();
-			/*textoRadius = radius - 41;
+			textoRadius = radius - 41;
+			/*
 			espacioTexto = new createjs.Shape();
 			espacioTexto.name = "galaxiaTexto";
 			espacioTexto.graphics.setStrokeStyle(1, 'round', 'round')
@@ -123,9 +129,9 @@ Ext.define('OUIsp.Galaxies.View.Galaxy', {
 			espacioTexto.cursor = "pointer";*/
 
 			//text.x = 0;
-			//wi = textoRadius * 2 - 40;
-			//he = textoRadius * 2 - 100;
-			/*textBig = new txt.Text({
+			/*wi = textoRadius * 2 - 40;
+			he = textoRadius * 2 - 100;
+			textBig = new txt.Text({
 				text: 'Colombia',
 				font: 'Arial',
 				//singleLine: true,
@@ -140,10 +146,10 @@ Ext.define('OUIsp.Galaxies.View.Galaxy', {
 				debug: true,
 				fillColor: "green"
 			});
-			textBig.fillColor = "blue";
-			/* //textBig.text = "Colombia";
-			containerText = new createjs.Container();
-			containerText.addChild(espacioTexto, textBig);*/
+			textBig.fillColor = "blue";*/
+			//textBig.text = "Colombia";
+			//containerText = new createjs.Container();
+			//containerText.addChild(espacioTexto, textBig);
 			contenedorBola.addChild(ball);
 		}
 		return contenedorBola;
@@ -169,5 +175,8 @@ Ext.define('OUIsp.Galaxies.View.Galaxy', {
 		//- Si mi nivel es planeta:
 		//  - Mostrar máximo 6 lunas sobre mi circulo, y ocultar los botones
 		//- Cualquier otro nivel: no hacer nada y devolver array vacío
-	}
+	},
+
+	fobAddAction: function() {},
+	fobAddChild: function() {}
 });

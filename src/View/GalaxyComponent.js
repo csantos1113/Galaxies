@@ -2,7 +2,7 @@
 // NO BORRAR
 ServerFileRequest.ReplaceMeLibrary("OUIspecialized/Galaxies/resources/libs/easeljs-NEXT.min.js");
 ServerFileRequest.ReplaceMeLibrary("OUIspecialized/Galaxies/resources/libs/tweenjs-NEXT.min.js");
-ServerFileRequest.ReplaceMeLibrary("OUIspecialized/Galaxies/resources/libs/txt.js");
+ServerFileRequest.ReplaceMeLibrary("OUIspecialized/Galaxies/resources/libs/txt.min.js");
 
 Ext.define('OUIsp.Galaxies.View.GalaxyComponent', {
 	extend: 'OUI.Container.Container',
@@ -63,17 +63,11 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponent', {
 		return "<div class='o-galaxy-title'></div><canvas class='o-galaxy-stage' width='600' height='500' style='border:1px solid rgba(255, 0, 0, 0.3)'></canvas><div class='o-galaxy-convention'></div>";
 	},
 
-	initCreateJS: function() {
-		//Se busca el DOM del elemento canvas
-		//Se inicia el stage de createJS con su configuración y se cachea
-	},
-
 	updateSbTitle: function(isbNewTitle, isbOldTitle) {
 		var me = this;
 		//Si el componente ya está inicializado
 		if (me.initialized) {
 			//Se ajusta el contenido del título
-			me.AdjustTitle(isbNewTitle);
 			me.fireEvent("ievAdjustTitle", isbNewTitle);
 		}
 	},
@@ -180,10 +174,10 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponent', {
 	fobCanvas: function() {
 		//Retorna el DOM del elemento titulo, lo cachea
 		var me = this;
-		if (!me.cacheTitle) {
-			me.cacheTitle = me.element.down('.o-galaxy-stage');
+		if (!me.cacheCanvas) {
+			me.cacheCanvas = me.element.down('.o-galaxy-stage');
 		}
-		return me.cacheTitle;
+		return me.cacheCanvas;
 	},
 	/**
 	 * @method fobConvention

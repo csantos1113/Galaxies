@@ -54,13 +54,21 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponentController', {
 			obView = me.getView(),
 			obStage,
 			obCanvas = obView.fobCanvas();
+		//Ajustamos el título
+		me.AdjustTitle();
 
 		obStage = me.obStage = new createjs.Stage(obCanvas.dom);
 		obStage.autoClear = true;
 		obStage.enableMouseOver();
-		createjs.Ticker.addEventListener("tick", obStage);
+		createjs.Touch.enable(obStage);
 		//Crea la galaxia base
 		me.BuildInitialGalaxy();
+	},
+
+	onTick: function(event) {
+		var me = this;
+		//console.log("tick tick tick!");
+		me.obStage.update(event);
 	},
 
 	/**
@@ -70,8 +78,7 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponentController', {
 	 */
 	BuildInitialGalaxy: function() {
 		var me = this,
-			obView = me.getView(),
-			obCanvas = obView.fobCanvas();
+			obView = me.getView();
 
 		//Se guarda la galaxia en el caché
 		me.obInitialGalaxy = me.obCurrentGalaxy = Ext.create('OUIsp.Galaxies.View.Galaxy', {
@@ -86,25 +93,53 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponentController', {
 			//El nivel por defecto para esta galaxia es: Galaxies_Util.cobLEVEL.GALAXY
 			nuLevel: Galaxies_Util.cobLEVEL.GALAXY
 		});
-		//Se obtiene el componente
-		obComponent = me.obInitialGalaxy.fobComponent();
-		var fnAdjustXY = function() {
-			var nuWidth = obCanvas.getWidth(),
-				nuHeight = obCanvas.getHeight(),
-				obMiddlePoint = {
-					x: nuWidth / 2,
-					y: nuHeight / 2
-				};
-			obComponent.x = obMiddlePoint.x;
-			obComponent.y = obMiddlePoint.y;
-		};
-		if (obCanvas.isPainted()) {
-			fnAdjustXY();
+		if (obView.isPainted()) {
+			me.onPainted();
 		} else {
-			obView.on("painted", fnAdjustXY);
+			obView.on({
+				"painted": {
+					fn: me.onPainted,
+					single: true
+				},
+				scope: me
+			});
+			//Re-pintar cuando se modifique el tamaño del navegador
+			Ext.Viewport.on("resize", me.Redraw, me);
 		}
-		//Se adiciona al obStage
+	},
+
+	Redraw: function() {
+		var me = this,
+			obView = me.getView(),
+			obEl = obView.element,
+			obTitle = obView.fobTitle(),
+			nuWidth = obEl.getWidth(),
+			nuHeight = obEl.getHeight() - obTitle.getHeight(),
+			obStage = me.obStage,
+			obFirstChild = me.obInitialGalaxy,
+			//Se obtiene el componente
+			obComponent = obFirstChild.fobComponent(),
+			obCanvas = obView.fobCanvas(),
+			obMiddlePoint = {
+				x: nuWidth / 2,
+				y: nuHeight / 2
+			};
+		//Se ajusta el tamaño del canvas
+		obCanvas.dom.setAttribute("width", nuWidth);
+		obCanvas.dom.setAttribute("height", nuHeight);
+		//Se ajusta el componente principal al centro del canvas
+		obComponent.x = obMiddlePoint.x;
+		obComponent.y = obMiddlePoint.y;
+	},
+
+	onPainted: function() {
+		var me = this,
+			//Se obtiene el componente
+			obComponent = me.obInitialGalaxy.fobComponent();
+		me.Redraw();
+		//Se adiciona el hijo principal
 		me.obStage.addChild(obComponent);
+		createjs.Ticker.addEventListener("tick", me.onTick.bind(me));
 	},
 
 	/**
@@ -117,14 +152,21 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponentController', {
 	AdjustTitle: function(isbNewTitle) {
 		var me = this,
 			obGalaxyComp = me.getView(),
-			obTitle = me.fobTitle(),
-			sbTitle = isbNewTitle || me.getSbTitle() || "",
-			sbHasTitle = "has-title",
+			obTitle = obGalaxyComp.fobTitle(),
+			sbTitle = isbNewTitle || obGalaxyComp.getSbTitle() || "",
+			sbOldTitle = obTitle.getHtml();
+		//Si es el mismo título, termina
+		if (sbTitle == sbOldTitle) {
+			return;
+		}
+		var sbHasTitle = "has-title",
 			sbMethod = Ext.isEmpty(sbTitle) ? "removeCls" : "addCls";
 		//Se adiciona o remueve la clase del titulo
 		obGalaxyComp[sbMethod](sbHasTitle);
 		//Se ajusta el contenido del titulo
 		obTitle.setHtml(sbTitle);
+		//Reestructure
+		me.Redraw();
 	},
 
 	onUpdateGalaxyProp: function(isbProperty, iobNewValue) {

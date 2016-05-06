@@ -12,21 +12,12 @@ Ext.define('OUIsp.Galaxies.View.Action', {
 	 */
 
 	config: {
-		sbTooltip: null,
 		openId: null,
 		obTheme: null,
-		sbIcon: null
-	},
-	setSbTooltip: function() {
-		//Si ya está inicializado, warn diciendo que no se puede cambiar después de creado
-	},
-	setOpenId: function() {
-		//Si ya está inicializado, warn diciendo que no se puede cambiar después de creado
+		sbIcon: null,
+		sbTooltip: null
 	},
 	setObTheme: function() {
-		//Si ya está inicializado, warn diciendo que no se puede cambiar después de creado
-	},
-	setSbIcon: function() {
 		//Si ya está inicializado, warn diciendo que no se puede cambiar después de creado
 	},
 	
