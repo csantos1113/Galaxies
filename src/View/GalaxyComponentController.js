@@ -15,10 +15,10 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponentController', {
 		//eventos privados entre la vista y su ViewController
 		iobGalaxyComp.on({
 			ievAdjustTitle: 'AdjustTitle',
-			ievInitialize: 'InitComponent',
 			ievupdateproperty: 'onUpdateGalaxyProp',
 			scope: me
 		});
+		me.InitComponent(iobGalaxyComp);
 	},
 
 	/**
@@ -49,11 +49,10 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponentController', {
 	 */
 	arGalaxyRelations: [],
 
-	InitComponent: function() {
+	InitComponent: function(iobGalaxyComp) {
 		var me = this,
-			obView = me.getView(),
 			obStage,
-			obCanvas = obView.fobCanvas();
+			obCanvas = iobGalaxyComp.fobCanvas();
 		//Ajustamos el título
 		me.AdjustTitle();
 
@@ -87,7 +86,6 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponentController', {
 			sbDisplayField: obView.getSbDisplayField(),
 			sbLineType: obView.getSbLineType(),
 			obTheme: obView.getObTheme(),
-			blDestroyIfEmpty: obView.getBlDestroyIfEmpty(),
 			arActions: obView.getArActions(),
 			defaultChildConfig: obView.getDefaultChildConfig(),
 			//El nivel por defecto para esta galaxia es: Galaxies_Util.cobLEVEL.GALAXY
@@ -144,7 +142,7 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponentController', {
 
 	/**
 	 * @method AdjustTitle
-	 * busca el DOM del titulo y le actualiza el contenido según el nuevo valor
+	 * busca el DOM del título y le actualiza el contenido según el nuevo valor
 	 * Se hace toggle de la clase 'has-title' si llega o no llega el nuevo valor
 	 *
 	 * @param  {String}    isbNewTitle [description]
@@ -161,9 +159,9 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponentController', {
 		}
 		var sbHasTitle = "has-title",
 			sbMethod = Ext.isEmpty(sbTitle) ? "removeCls" : "addCls";
-		//Se adiciona o remueve la clase del titulo
+		//Se adiciona o remueve la clase del título
 		obGalaxyComp[sbMethod](sbHasTitle);
-		//Se ajusta el contenido del titulo
+		//Se ajusta el contenido del título
 		obTitle.setHtml(sbTitle);
 		//Reestructure
 		me.Redraw();
@@ -176,5 +174,9 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponentController', {
 		if (obInitialGalaxy[sbMethod]) {
 			obInitialGalaxy[sbMethod](iobNewValue);
 		}
+	},
+	fobGetInitialGalaxy: function() {
+		//Retorna la galaxia inicial
+		return this.obInitialGalaxy;
 	}
 });

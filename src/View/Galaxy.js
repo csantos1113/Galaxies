@@ -1,6 +1,7 @@
 Ext.define('OUIsp.Galaxies.View.Galaxy', {
 	extend: 'Ext.Widget',
 	xtype: 'OUIsp_Galaxies_Galaxy',
+	alternateClassName: 'OUIsp_Galaxy',
 	requires: [
 		'OUIsp.Galaxies.View.GalaxyController',
 		'OUIsp.Galaxies.View.Action'
@@ -21,15 +22,29 @@ Ext.define('OUIsp.Galaxies.View.Galaxy', {
 		/**
 		 * @private
 		 */
-		obParentGalaxy: null
+		obParent: null
 	},
 	statics: {
 		cnuRADIUS_EXPANDED: 372.5,
 		cnuRADIUS_GALAXY: 149,
 		cnuRADIUS_PLANET: 41,
-		cnuRADIUS_MOON: 8.5,
+		cnuRADIUS_SATELLITE: 8.5,
 		cnuLIMIT_CHILDREN: 6,
-		cnuLIMIT_ACTIONS: 2
+		cnuLIMIT_ACTIONS: 2,
+
+		cobLINE: {
+			DOTTED: 'dotted',
+			SOLID: 'solid'
+		},
+
+		cobLEVEL: {
+			BIGGEST: 16,
+			EXPANDED: 8,
+			GALAXY: 4,
+			PLANET: 2,
+			SATELLITE: 1,
+			HIDDEN: 0
+		}
 	},
 
 
@@ -50,7 +65,7 @@ Ext.define('OUIsp.Galaxies.View.Galaxy', {
 	},
 	updateNuLevel: function(inuNewLevel, inuOldLevel) {
 		//Solo se ejecuta si se ha inicializado
-		//Dispara el evento zoomchanged, informado si evoluciono o involuciono
+		//Dispara el evento levelchanged, informado si evoluciono o involuciono
 		//Usado para que sus papas y sus hijos se adapten tambien
 	},
 
@@ -91,11 +106,10 @@ Ext.define('OUIsp.Galaxies.View.Galaxy', {
 	fobComponent: function(iblFromCache) {
 		var me = this,
 			obSelf = me.self,
-			nuLevel = me.getNuLevel(),
 			obUtil = Galaxies_Util,
 			obTheme = me.getObTheme(),
 			contenedorBola;
-		if (obUtil.fblIsGalaxy(nuLevel)) {
+		if (obUtil.fblIsGalaxy()) {
 			var radius = obSelf.cnuRADIUS_GALAXY,
 				ball = new createjs.Shape();
 			contenedorBola = me.cacheGalaxyContainer;
@@ -109,7 +123,7 @@ Ext.define('OUIsp.Galaxies.View.Galaxy', {
 			var obGraphic = ball.graphics
 				.setStrokeStyle(3, 'round', 'round')
 				.beginStroke(obTheme.borderColor);
-			if (obUtil.fblIsDotted(me.getSbLineType())) {
+			if (obUtil.fblIsDotted()) {
 				obGraphic.setStrokeDash([5, 10], 0);
 			}
 			obGraphic.beginFill(obTheme.fillColor).drawCircle(0, 0, radius)
@@ -178,5 +192,78 @@ Ext.define('OUIsp.Galaxies.View.Galaxy', {
 	},
 
 	fobAddAction: function() {},
-	fobAddChild: function() {}
+	fobAddChild: function() {},
+
+
+
+	//UTILITARIOSSS
+	fnuNextLevel: function(inuCurrentLevel) {
+		var me = this,
+			arOrderLevel = me.self.arOrderLevel,
+			nuPosition;
+		nuPosition = arOrderLevel.indexOf(inuCurrentLevel);
+		if (nuPosition > 0) {
+			return arOrderLevel[nuPosition - 1];
+		}
+		return inuCurrentLevel;
+	},
+
+	fnuPrevLevel: function(inuCurrentLevel) {
+		var me = this,
+			obLEVEL = me.cobLEVEL,
+			arOrderLevel = me.self.arOrderLevel,
+			nuPosition;
+		nuPosition = arOrderLevel.indexOf(inuCurrentLevel);
+		//Si la posición es la última
+		if (nuPosition == arOrderLevel.length - 1) {
+			//Se retorna esa misma posición
+			return inuCurrentLevel;
+		}
+		//Si no, se retorna la siguiente posición
+		return arOrderLevel[nuPosition + 1];
+	},
+
+
+	fblValidLineType: function(isbLineType) {
+		var me = this,
+			obLINE = me.self.cobLINE;
+		return isbLineType === obLINE.DOTTED ||
+			isbLineType === obLINE.SOLID;
+	},
+
+	fblIsGalaxy: function() {
+		var me = this,
+			nuLevel = me.getNuLevel();
+		return nuLevel === me.self.cobLEVEL.GALAXY;
+	},
+	fblIsPlanet: function() {
+		var me = this,
+			nuLevel = me.getNuLevel();
+		return nuLevel === me.self.cobLEVEL.PLANET;
+	},
+	fblIsSatellite: function() {
+		var me = this,
+			nuLevel = me.getNuLevel();
+		return nuLevel === me.self.cobLEVEL.SATELLITE;
+	},
+
+	fblIsDotted: function() {
+		var me = this,
+			sbLineType = me.getSbLineType();
+		return sbLineType === me.self.cobLINE.DOTTED;
+	}
+}, function() {
+	var me = this,
+		obLEVEL = me.self.cobLEVEL,
+		arOrderLevel = [
+			obLEVEL.BIGGEST,
+			obLEVEL.EXPANDED,
+			obLEVEL.GALAXY,
+			obLEVEL.PLANET,
+			obLEVEL.SATELLITE,
+			obLEVEL.HIDDEN
+		];
+	me.addStatics({
+		arOrderLevel: arOrderLevel
+	});
 });

@@ -14,9 +14,9 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponent', {
 	controller: 'galaxyComponentController',
 
 	config: {
-		//Titulo del contenedor de galaxias
+		//título del contenedor de galaxias
 		sbTitle: null,
-		//Indica si el componete debe estar en modo solo lectura
+		//Indica si el componente debe estar en modo solo lectura
 		blReadOnly: false,
 		//Indica si la galaxia es requerida
 		blRequired: false,
@@ -32,30 +32,27 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponent', {
 		sbLineType: Galaxies_Util.cobLINE.SOLID,
 		//Tema de la galaxia inicial
 		obTheme: Galaxies_Util.cobTHEME.GRAY,
-		//Indica si la galaxia inicial se destruye una vez quede vacío
-		blDestroyIfEmpty: false,
-		//Botones de acción de la galaxia inicial
-		arActions: [],
 		//Configuración por defecto de las galaxias hijas de la galaxia inicial
 		defaultChildConfig: {},
 		//Galaxias hijas de la galaxia inicial
-		arChildren: []
+		arChildren: [],
+		//Botones de acción de la galaxia inicial
+		arActions: []
 	},
 
 	initialize: function() {
 		//Adiciona una clase css para el componente
-		//Adiciona el html base del componete: titulo y canvas
+		//Adiciona el html base del componente: título y canvas
 		var me = this;
 		me.addCls("o-galaxy-comp");
 		me.setHtml(me.fsbTemplate());
 		//Se llama al callParent para inicializar la clase genérica
 		me.callParent();
-		me.fireEvent("ievInitialize");
 	},
 
 	/**
 	 * @method fsbTemplate
-	 * Retorna el html base del componete: titulo y canvas
+	 * Retorna el html base del componente: título, canvas y convenciones
 	 * @return {String}    HTML base del componente
 	 * @private
 	 */
@@ -90,10 +87,7 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponent', {
 	updateBlRequired: function(iblNewValue, iblOldValue) {
 		var me = this;
 		//Si está inicializado
-		if (me.initialized) {
-			//Se traspasa esta propiedad a la galaxia inicial
-			me.fireEvent("ievupdateproperty", "BlRequired", iblNewValue);
-		}
+
 	},
 	updateObRecord: function(iobNewValue, iobOldValue) {
 		var me = this;
@@ -127,14 +121,6 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponent', {
 			me.fireEvent("ievupdateproperty", "ObTheme", iobNewValue);
 		}
 	},
-	updateBlDestroyIfEmpty: function(iblNewValue, iblOldValue) {
-		var me = this;
-		//Si está inicializado
-		if (me.initialized) {
-			//Se traspasa esta propiedad a la galaxia inicial
-			me.fireEvent("ievupdateproperty", "BlDestroyIfEmpty", iblNewValue);
-		}
-	},
 	updateArActions: function(iarNewValue, iarOldValue) {
 		var me = this;
 		//Si está inicializado
@@ -158,7 +144,7 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponent', {
 	 * @private
 	 */
 	fobTitle: function() {
-		//Retorna el DOM del elemento titulo, lo cachea
+		//Retorna el DOM del elemento título, lo cachea
 		var me = this;
 		if (!me.cacheTitle) {
 			me.cacheTitle = me.element.down('.o-galaxy-title');
@@ -168,11 +154,11 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponent', {
 	/**
 	 * @method fobCanvas
 	 * Retorna el elemento DOM del elemento canvas
-	 * @return {Object}      Elemento donde ver el componete
+	 * @return {Object}      Elemento donde ver el componente
 	 * @private
 	 */
 	fobCanvas: function() {
-		//Retorna el DOM del elemento titulo, lo cachea
+		//Retorna el DOM del elemento título, lo cachea
 		var me = this;
 		if (!me.cacheCanvas) {
 			me.cacheCanvas = me.element.down('.o-galaxy-stage');
@@ -205,10 +191,5 @@ Ext.define('OUIsp.Galaxies.View.GalaxyComponent', {
 
 	toggleConventions: function() {
 		//Adiciona u remueve la clase 'conventions-showed' al componente
-	},
-
-	fobGetInitialGalaxy: function() {
-		//Retorna la galaxia inicial
-		return this.obInitialGalaxy;
 	}
 });

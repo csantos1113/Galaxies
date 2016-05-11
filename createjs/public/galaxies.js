@@ -56,6 +56,7 @@ function hacerPlaneta(galaxia, isbName, radioGalaxia, nuLunas) {
 		}, 500);
 	galaxia.addChild(containerHijo);
 	galaxia.planetas.push(containerHijo);
+	window.la = containerHijo;
 	return containerHijo;
 }
 
@@ -140,6 +141,7 @@ function inserteAccion(galaxia, radioGalaxia) {
 	ball.cursor = "pointer";
 	ball.radiusAccion = radiusAccion;
 	var text = new createjs.Text();
+	window.aa = text;
 	text.font = "16px OpenIcons";
 	text.color = "rgb(129, 180, 251)";
 	text.text = '¬';
